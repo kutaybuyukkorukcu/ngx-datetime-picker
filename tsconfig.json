@@ -11,6 +11,12 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "paths": {
+      "ngx-datetime-picker": [
+        "dist/ngx-datetime-picker/ngx-datetime-picker",
+        "dist/ngx-datetime-picker"
+      ]
+    },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
