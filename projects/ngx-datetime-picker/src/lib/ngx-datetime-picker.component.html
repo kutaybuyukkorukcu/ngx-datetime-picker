@@ -1,7 +1,15 @@
 <div dropdown #dropdown (openDropdown)="onOpenDropdown($event)" (closeDropdown)="onCloseDropdown($event)">
     <div class="" role="content" style="display: flex;">
         <div class="" role="date">
-            
+            <!-- [dateEnabled]="datesEnabled" -->
+            <datepicker *ngIf="isDateVisible"
+                [(ngModel)]="dateValue"
+                (ngModelChange)="onDatepickerChange()"
+                [datepickerMode]="datepickerMode"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                [dateDisabled]="datesDisabled"
+            ></datepicker>
         </div>
     </div>
 </div>

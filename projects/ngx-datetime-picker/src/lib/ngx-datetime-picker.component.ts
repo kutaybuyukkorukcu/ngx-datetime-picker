@@ -10,7 +10,7 @@ export class NgxDatetimePickerComponent implements OnInit {
 
   @ViewChild('dropdown', { static: true }) public dropdown!: BsDropdownDirective;
   
-  @Input() public datepickerMode: string = 'day';
+  @Input() public datepickerMode: DatepickerMode = 'day';
   
   @Input() public minDate!: Date;
 
@@ -94,8 +94,8 @@ export class NgxDatetimePickerComponent implements OnInit {
     this.resourceLocale = this.resourceLocale == ResourceLocale.TWENTY_FOUR_HOUR ? true : false;
   }
 
-  public onOpenDropdown(currentDropdownOpenCloseStatus: boolean) {
-    if (currentDropdownOpenCloseStatus == true) {
+  public onOpenDropdown(event: any) {
+    if (event == true) {
       this.dropdownOpenCloseStatus = true;
       this.onWindowScroll();
       this.dropdown.show();
@@ -104,7 +104,7 @@ export class NgxDatetimePickerComponent implements OnInit {
     }
   }
 
-  public onCloseDropdown() {
+  public onCloseDropdown(event?: any) {
     this.dropdownOpenCloseStatus = false;
 
     this.onCloseDropdownEvent.emit(false);
@@ -179,3 +179,4 @@ export enum ResourceLocale {
 }
 
 type Placement = 'top' | 'bottom' | 'left' | 'right';
+type DatepickerMode = 'day' | 'month' | 'year';
