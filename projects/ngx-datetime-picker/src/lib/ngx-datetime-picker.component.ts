@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, ViewChild, ElementRef, SimpleChanges, HostListener, EventEmitter } from '@angular/core';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
+import { TimepickerConfig, TimepickerComponent } from 'ngx-bootstrap/timepicker';
+import { BsDatepickerConfig, DatepickerConfig, DatePickerComponent } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'lib-ngx-datetime-picker',
@@ -25,9 +27,9 @@ export class NgxDatetimePickerComponent implements OnInit {
   // Default true
   @Input() isYearVisible: boolean = true;
 
-  @Input() isDateValid: boolean = false;
+  @Input() isDateValid: boolean = true;
 
-  @Input() isTimeValid: boolean = false;
+  @Input() isTimeValid: boolean = true;
 
   @Input() daysDisabled: number[] = [];
 
@@ -40,10 +42,10 @@ export class NgxDatetimePickerComponent implements OnInit {
   @Input() public clearButtonProperties!: ButtonProperties;
 
   // Default 24HR format
-  @Input() public resourceLocale: any | number = ResourceLocale.TWENTY_FOUR_HOUR;
+  @Input() public showInMeridiem: boolean = true;
 
   // Default 'MM/DD/YYYY'
-  @Input() public dateInputFormat: any | string = 'MM/DD/YYYY';
+  @Input() public dateInputFormat: string = 'MM/DD/YYYY';
 
   // Default true
   @Input() public isDateVisible: boolean = true;
@@ -87,11 +89,17 @@ export class NgxDatetimePickerComponent implements OnInit {
   public timeValue!: Date;
   public dropdownOpenCloseStatus: boolean = false;
 
-  constructor(private elementRef: ElementRef) { }
+  // public datepickerConfig!: DatepickerConfig;
+  public datepickerConfig!: BsDatepickerConfig;
+  public timepickerConfig!: TimepickerConfig;
+
+  constructor(private elementRef: ElementRef) { 
+    this.datepickerConfig.startView = this.datepickerMode;
+    this.datepickerConfig.dateInputFormat = this.dateInputFormat;
+  }
 
   ngOnInit(): void {
   
-    this.resourceLocale = this.resourceLocale == ResourceLocale.TWENTY_FOUR_HOUR ? true : false;
   }
 
   public onOpenDropdown(event: any) {
@@ -149,6 +157,7 @@ export class NgxDatetimePickerComponent implements OnInit {
     const dropdownElement: HTMLElement = element.children.namedItem('dropdown') as HTMLElement;
     const contentElement: HTMLElement | null = dropdownElement.children.length > 0 ? dropdownElement.children.namedItem('content') as HTMLElement : null;
   
+    // This part wont be necessary to calculate since the component purpose is to show date and time picker in the content bubble.
     let contentYOffset = this.isDateVisible && this.isTimeVisible ? 400 : this.isDateVisible ? 300 : 100;
 
     if (contentElement != null) {
@@ -171,11 +180,6 @@ export interface ButtonProperties {
   name: string;
   cssClass: string;
   isVisible: boolean;
-}
-
-export enum ResourceLocale {
-  TWELVE_HOUR = 0,
-  TWENTY_FOUR_HOUR = 1
 }
 
 type Placement = 'top' | 'bottom' | 'left' | 'right';

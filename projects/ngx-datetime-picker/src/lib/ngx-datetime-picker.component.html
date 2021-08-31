@@ -1,15 +1,37 @@
 <div dropdown #dropdown (openDropdown)="onOpenDropdown($event)" (closeDropdown)="onCloseDropdown($event)">
     <div class="" role="content" style="display: flex;">
         <div class="" role="date">
-            <!-- [dateEnabled]="datesEnabled" -->
-            <datepicker *ngIf="isDateVisible"
+            <!-- <datepicker
                 [(ngModel)]="dateValue"
                 (ngModelChange)="onDatepickerChange()"
                 [datepickerMode]="datepickerMode"
                 [minDate]="minDate"
                 [maxDate]="maxDate"
                 [dateDisabled]="datesDisabled"
-            ></datepicker>
+            ></datepicker> -->
+            
+            <!-- isHorizantal -->
+
+            <!-- Custom class and style impl. / isYearVisible (Allowing user to select only months and days) -->
+            <input type="text"
+                bsDatepicker
+                [(ngModel)]="dateValue"
+                placeholder="placeholder"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                [daysDisabled]="daysDisabled"
+                [datesDisabled]="datesDisabled"
+                [datesEnabled]="datesEnabled"
+                [showMeridian]="showInMeridiem"
+                placement="placement"
+                [bsConfig]="datepickerConfig"
+            >
+
+            <!-- Validations (isDateValid, isTimeValid) -->
+            <!-- Today, Clear, Apply buttons  -->
+
+
+            <!-- isVertical  -->
         </div>
     </div>
 </div>
