@@ -105,7 +105,6 @@ export class NgxDatetimePickerComponent implements OnInit {
   public onOpenDropdown(event: any) {
     if (event == true) {
       this.dropdownOpenCloseStatus = true;
-      this.onWindowScroll();
       this.dropdown.show();
     } else {
       this.onCloseDropdown();
@@ -142,36 +141,6 @@ export class NgxDatetimePickerComponent implements OnInit {
       this.onCurrentValueChangeEvent.emit(this.customService.apply(this.timeValue));
     } else {
       this.onCurrentValueChangeEvent.emit(this.timeValue);
-    }
-  }
-
-  @HostListener('window:scroll', [])
-  @HostListener('window:resize', [])
-  public onWindowScroll() {
-    const element: HTMLElement = this.elementRef.nativeElement;
-    const boundingRect: ClientRect = element.getBoundingClientRect();
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const offsetTop = boundingRect.top + window.pageYOffset;
-    const height = boundingRect.height;
-
-    const dropdownElement: HTMLElement = element.children.namedItem('dropdown') as HTMLElement;
-    const contentElement: HTMLElement | null = dropdownElement.children.length > 0 ? dropdownElement.children.namedItem('content') as HTMLElement : null;
-  
-    // This part wont be necessary to calculate since the component purpose is to show date and time picker in the content bubble.
-    let contentYOffset = this.isDateVisible && this.isTimeVisible ? 400 : this.isDateVisible ? 300 : 100;
-
-    if (contentElement != null) {
-      const display = contentElement.style.display;
-      contentElement.style.display = 'inherit';
-
-      contentYOffset = contentElement.getBoundingClientRect().height;
-      contentElement.style.display = display;
-    }
-
-    if ((offsetTop - contentYOffset) <= 0) {
-      this.dropdownOpenCloseStatus = false;
-    } else {
-      this.dropdownOpenCloseStatus = ((offsetTop + height + contentYOffset) > (scrollTop + document.documentElement.clientHeight));
     }
   }
 }
